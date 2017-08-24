@@ -24,6 +24,8 @@
     "nodemon": "^1.11.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "source-map-loader": "^0.2.1",
     "ts-loader": "^2.3.3",
     "typescript": "^2.4.2",

@@ -1,6 +1,9 @@
 import * as React from 'react';
+import { bindActionCreators } from 'redux'; 
+import { connect } from 'react-redux';
+import * as ClockActions from './clockActions';
 
-export default class Clock extends React.Component {
+class Clock extends React.Component {
     public state: any;
     public props: any;
     private timerID;
@@ -8,9 +11,6 @@ export default class Clock extends React.Component {
     constructor(props: any) {
         super(props);
         this.props = props;
-        this.state = {
-            date: new Date()
-        };
     }
 
     componentDidMount() {
@@ -24,14 +24,28 @@ export default class Clock extends React.Component {
     }
 
     tick() {
-        this.setState({
-            date: new Date()
-        });
+        this.props.actions.setTime(new Date());
     }
 
     render() {
         return (
-            <div>{this.state.date.toLocaleTimeString()}</div>
+            <div className="">{(new Date(this.props.date)).toLocaleTimeString('nl-NL', {
+                hour: "2-digit", minute: "2-digit", second: "2-digit"
+            })}</div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        date: state.clock.date
+    };
+}
+  
+function mapDispatchToProps(dispatch) {
+    return { 
+        actions: bindActionCreators(ClockActions as any, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Clock);

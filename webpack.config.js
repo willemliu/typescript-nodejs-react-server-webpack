@@ -42,7 +42,7 @@ module.exports = {
   module: {
     rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by a TypeScript loader
-      { test: /\.tsx?$/, loader: 'ts-loader' },
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
       { test: /\.js$/, loader: "source-map-loader", enforce: "pre" }
     ]
   },

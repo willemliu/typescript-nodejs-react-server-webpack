@@ -3,8 +3,14 @@ import * as fs from 'fs-extra';
 import * as Mustache from 'mustache';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import Title from '../components/title/Title';
 import Clock from "../components/clock/Clock";
+import Button from "../components/button/Button";
+import { rootReducer } from "../redux/reducers";
+import { setTime } from "../components/clock/clockActions";
+import { setName } from "../components/title/titleActions";
 
 declare var __dirname: any;
 
@@ -24,13 +30,22 @@ export default class Home {
 
     initRoutes() {
         this.app.get('/', (req, res) => {
+            // Create a new Redux store instance whose state will be passed along to the client.
+            const store = createStore(rootReducer);
+            store.dispatch(setTime((new Date()).toLocaleTimeString('nl-NL')));
+            store.dispatch(setName('Willem Liu'));
+            console.info(store.getState());
             const html = Mustache.render(this.templates['home'], {}, {
                 reactHtml: ReactDOMServer.renderToString(
-                    <div>
-                        <Title name="Willem Liu"/>
-                        <Clock/>
-                    </div>
-                )
+                    <Provider store={store}>
+                        <div>
+                            <Title/>
+                            <Clock/>
+                            <Button/>
+                        </div>
+                    </Provider>
+                ),
+                preloadedState: JSON.stringify(store.getState(), null, 2)
             });
             res.send(html);
         });

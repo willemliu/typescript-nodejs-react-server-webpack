@@ -1,12 +1,16 @@
 import * as React from 'react';
+import { bindActionCreators } from 'redux'; 
+import { connect } from 'react-redux';
+import * as TitleActions from './titleActions';
 
-export default class Title extends React.Component {
+class Title extends React.Component {
     public state: any;
     public props: any;
 
     constructor(props: any) {
         super(props);
         this.props = props;
+        console.info('Title props', props);
     }
 
     componentDidMount() {
@@ -22,3 +26,18 @@ export default class Title extends React.Component {
         );
     }
 }
+
+
+function mapStateToProps(state) {
+    return {
+        name: state.title.name
+    };
+}
+  
+function mapDispatchToProps(dispatch) {
+    return { 
+        actions: bindActionCreators(TitleActions as any, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Title);
