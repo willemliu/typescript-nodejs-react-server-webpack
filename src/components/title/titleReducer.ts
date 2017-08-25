@@ -1,16 +1,34 @@
-import { SET_NAME } from "./titleActions";
+import { ADD_TITLE } from "./titleActions";
+import { bindActionCreators } from 'redux'; 
+import { connect } from 'react-redux';
+import * as TitleActions from './titleActions';
+import Title from "./Title";
 
-const initialState = {
-    name: 'John Doe'
-};
+const initialState: any = [];
 
-export default function titleReducer(state = initialState, action) {
-    let newState = Object.assign({}, state);
+export function titleReducer(state = initialState, action) {
+    let newState = [...state];
     switch(action.type) {
-        case SET_NAME:
-            newState.name = action.name;
+        case ADD_TITLE:
+            newState.push(action.title);
             return newState;
         default:
             return newState;
     }
 }
+
+
+function mapStateToProps(state, ownProps) {
+    console.info(ownProps.idx, state);
+    return {
+        title: state.titles[ownProps.idx]
+    };
+}
+  
+function mapDispatchToProps(dispatch, ownProps) {
+    return { 
+        actions: bindActionCreators(TitleActions as any, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Title);

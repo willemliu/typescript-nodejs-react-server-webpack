@@ -2,7 +2,7 @@
  * action types
  */
 
-export const SET_NAME = 'SET_NAME';
+export const ADD_TITLE = 'ADD_TITLE';
 
 /*
  * other constants
@@ -12,6 +12,6 @@ export const SET_NAME = 'SET_NAME';
  * action creators
  */
 
-export function setName(val) {
-  return { type: SET_NAME, name: val };
+export function addTitle(val) {
+  return { type: ADD_TITLE, title: val };
 }
