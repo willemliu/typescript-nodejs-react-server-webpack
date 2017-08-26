@@ -1,6 +1,8 @@
 const webpack = require("webpack");
 const path = require('path');
 
+console.info('process.env.NODE_ENV', JSON.stringify(process.env.NODE_ENV));
+
 module.exports = {
 
   devtool: "source-map",
@@ -37,6 +39,9 @@ module.exports = {
       output: {
         comments: false
       }
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ],
   module: {

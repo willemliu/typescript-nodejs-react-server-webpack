@@ -13,9 +13,13 @@ declare var __dirname: any;
 export default class HomeController {
     private app: express.Application;
     private templates = {};
+    private debug: boolean;
 
-    constructor(app: express.Application) {
+    constructor(app: express.Application, debug?: boolean) {
         console.info('Initialized Home page');
+        if(debug !== undefined) {
+            this.debug = debug;
+        }
         this.app = app;
         this.loadTemplates({home: `${__dirname}/home.mst`}).then(() => {
             console.info('Templates load done');
@@ -32,7 +36,7 @@ export default class HomeController {
 
             const teasers = store.getState().teasers;
 
-            const html = Mustache.render(this.templates['home'], {}, {
+            const html = Mustache.render(this.templates['home'], {debug: this.debug}, {
                 reactHtml: ReactDOMServer.renderToString(
                     homePage(store, teasers)
                 ),

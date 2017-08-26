@@ -13,12 +13,22 @@ gulp.task('watch', ['default'], function() {
     gulp.watch(['./src/**/*'], ['default']);
 });
 
+gulp.task('watch-release', ['release'], function() {
+    gulp.watch(['./src/**/*'], ['release']);
+});
+
 gulp.task('default', ['ts'], function() {
   return gulp.src('./src/main.tsx?')
     .pipe(webpackStream(require('./webpack.config.js'), webpack))
     .pipe(gulp.dest('./dist/js'));
 });
 
+gulp.task('production', function() {
+    return process.env.NODE_ENV = 'production';
+});
+
+gulp.task('release', ['production', 'default']);
+    
 /**
  * Build web client
  */
