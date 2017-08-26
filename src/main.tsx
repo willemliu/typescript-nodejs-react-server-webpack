@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from "./redux/reducers";
-import Teaser from "./compositions/teaser/teaserReducer";
 import homePage from "./pages/home/home";
 
 declare var window: any;
@@ -16,9 +15,7 @@ delete window.__PRELOADED_STATE__;
 // Create Redux store with initial state
 const store = createStore(rootReducer, preloadedState);
 
-const teasers = store.getState().teasers;
-
 ReactDOM.render(
-    homePage(store, teasers),
+    homePage(store, store.getState().teaserLists),
     document.getElementById('root')
 );

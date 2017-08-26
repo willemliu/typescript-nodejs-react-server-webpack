@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import Teaser from "../../compositions/teaser/teaserReducer";
+import TeaserList from "../../compositions/teaserList/teaserListReducer";
 
-export default function homePage(store, teasers) {
+export default function homePage(store, teaserLists) {
     return <Provider store={store}>
         <div>
             {
-                Object.keys(teasers).map(function(key, index) {
-                    return <Teaser key={index} idx={index} articleId={teasers[key].articleId}/>;
+                Object.keys(teaserLists).map(function(key, index) {
+                    return <TeaserList key={index} idx={index} teaserListId={teaserLists[key].teaserListId} articleIds={teaserLists[key].articleIds}/>;
                 })
             }
         </div>

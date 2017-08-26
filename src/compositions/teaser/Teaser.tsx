@@ -29,14 +29,15 @@ export default class Teaser extends React.Component {
     removeTeaser() {
         console.info('Remove teaser', this.props.articleId);
         this.props.actions.removeTeaser(this.props.articleId);
+        this.props.onRemove?this.props.onRemove(this.props.articleId):()=>{console.info('No onRemove callback for teaser', this.props.articleId)};
     }
 
     render() {
         if(!this.props.teaser) {
-            console.info('Render empty teaser', this.props.idx, this.props)            
+            console.info('Render empty teaser', this.props.idx, this.props);
             return null;
         }
-        console.info('Render teaser', this.props.idx, this.props)
+        console.info('Render teaser', this.props.idx, this.props);
         return (
             <article data-idx={this.props.idx} data-articleId={this.props.articleId}>
                 <Title title={this.props.teaser.title}/>

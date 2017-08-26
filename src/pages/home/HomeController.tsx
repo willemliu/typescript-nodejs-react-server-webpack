@@ -3,10 +3,11 @@ import * as fs from 'fs-extra';
 import * as Mustache from 'mustache';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
+import homePage from "./home";
 import { createStore } from 'redux';
 import { rootReducer } from "../../redux/reducers";
 import { addTeaser } from "../../compositions/teaser/teaserActions";
-import homePage from "./home";
+import { addTeaserToTeaserList } from "../../compositions/teaserList/teaserListActions";
 
 declare var __dirname: any;
 
@@ -34,11 +35,12 @@ export default class HomeController {
             store.dispatch(addTeaser({articleId: 123, title: 'Willem Liu', leadtext: 'This is something'}));
             store.dispatch(addTeaser({articleId: 1234, title: 'Stephanie Wong', leadtext: 'This is something else'}));
 
-            const teasers = store.getState().teasers;
+            store.dispatch(addTeaserToTeaserList(321, 123));
+            store.dispatch(addTeaserToTeaserList(321, 1234));
 
             const html = Mustache.render(this.templates['home'], {debug: this.debug}, {
                 reactHtml: ReactDOMServer.renderToString(
-                    homePage(store, teasers)
+                    homePage(store, store.getState().teaserLists)
                 ),
                 preloadedState: JSON.stringify(store.getState(), null, 2)
             });
