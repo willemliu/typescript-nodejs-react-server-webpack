@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import clockReducer from "../components/clock/clockReducer";
-import { titleReducer } from "../components/title/titleReducer";
+import { teaserReducer } from "../compositions/teaser/teaserReducer";
 
 const rootReducer = combineReducers({
-    titles: titleReducer,
-    clock: clockReducer
+    clock: clockReducer,
+    teasers: teaserReducer
 });
 
 export { rootReducer };

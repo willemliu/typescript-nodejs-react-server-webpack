@@ -4,25 +4,20 @@ import * as Mustache from 'mustache';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import Title from "../components/title/titleReducer";
-import Clock from "../components/clock/Clock";
-import Button from "../components/button/Button";
-import { rootReducer } from "../redux/reducers";
-import { setTime } from "../components/clock/clockActions";
-import { addTitle } from "../components/title/titleActions";
+import { rootReducer } from "../../redux/reducers";
+import { addTeaser } from "../../compositions/teaser/teaserActions";
+import homePage from "./home";
 
 declare var __dirname: any;
 
-export default class Home {
+export default class HomeController {
     private app: express.Application;
     private templates = {};
 
     constructor(app: express.Application) {
         console.info('Initialized Home page');
         this.app = app;
-        this.initRoutes();
-        this.loadTemplates({home: `${__dirname}/templates/home.mst`}).then(() => {
+        this.loadTemplates({home: `${__dirname}/home.mst`}).then(() => {
             console.info('Templates load done');
             this.initRoutes();
         });
@@ -32,20 +27,14 @@ export default class Home {
         this.app.get('/', (req, res) => {
             // Create a new Redux store instance whose state will be passed along to the client.
             const store: any = createStore(rootReducer);
-            store.dispatch(setTime((new Date()).toLocaleTimeString('nl-NL')));
-            store.dispatch(addTitle('Willem Liu'));
-            store.dispatch(addTitle('Stephanie Wong'));
+            store.dispatch(addTeaser({articleId: 123, title: 'Willem Liu', leadtext: 'This is something'}));
+            store.dispatch(addTeaser({articleId: 1234, title: 'Stephanie Wong', leadtext: 'This is something else'}));
+
+            const teasers = store.getState().teasers;
 
             const html = Mustache.render(this.templates['home'], {}, {
                 reactHtml: ReactDOMServer.renderToString(
-                    <Provider store={store}>
-                        <div>
-                            {store.getState().titles.map((val, idx) => {
-                                return <Title key={idx} idx={idx}/>;
-                            })}
-                            <Button/>
-                        </div>
-                    </Provider>
+                    homePage(store, teasers)
                 ),
                 preloadedState: JSON.stringify(store.getState(), null, 2)
             });

@@ -9,6 +9,7 @@ export default class Button extends React.Component{
         super(props);
         this.props = props;
         this.handleClick = this.handleClick.bind(this);
+        console.info('Button component', props);
     }
     
     componentDidMount() {
@@ -16,7 +17,7 @@ export default class Button extends React.Component{
     }
 
     componentWillUnmount() {
-        console.info('Button will dismount');
+        console.info('Button will unmount');
     }
 
     handleClick() {
@@ -24,8 +25,9 @@ export default class Button extends React.Component{
     }
     
     render() {
+        console.info('Render button');
         return (
-            <button onClick={this.handleClick}>AAAHH</button>
+            <button onClick={this.props.onClick?this.props.onClick:this.props.handleClick}>AAAHH</button>
         );
     }
 }

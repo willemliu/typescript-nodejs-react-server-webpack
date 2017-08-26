@@ -3,9 +3,8 @@ import * as ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from "./redux/reducers";
-import Title from "./components/title/titleReducer";
-import Clock from "./components/clock/Clock";
-import Button from "./components/button/Button";
+import Teaser from "./compositions/teaser/teaserReducer";
+import homePage from "./pages/home/home";
 
 declare var window: any;
 
@@ -17,14 +16,9 @@ delete window.__PRELOADED_STATE__;
 // Create Redux store with initial state
 const store = createStore(rootReducer, preloadedState);
 
+const teasers = store.getState().teasers;
+
 ReactDOM.render(
-    <Provider store={store}>
-        <div>
-            {store.getState().titles.map((val, idx) => {
-                return <Title key={idx} idx={idx}/>;
-            })}
-            <Button/>
-        </div>
-    </Provider>,
+    homePage(store, teasers),
     document.getElementById('root')
 );
