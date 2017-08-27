@@ -3,7 +3,7 @@
  */
 
 export const ADD_TEASER_TO_TEASER_LIST = 'ADD_TEASER_TO_TEASER_LIST';
-export const REMOVE_TEASER_FROM_TEASER_LIST = 'REMOVE_TEASER_FROM_TEASER_LIST';
+export const REMOVE_TEASER_FROM_TEASER_LISTS = 'REMOVE_TEASER_FROM_TEASER_LISTS';
 
 /*
  * other constants
@@ -18,5 +18,5 @@ export function addTeaserToTeaserList(teaserListId: number, articleId) {
 }
 
 export function removeTeaserFromTeaserList(teaserListId: number, articleId) {
-  return { type: REMOVE_TEASER_FROM_TEASER_LIST, teaserListId, articleId };
+  return { type: REMOVE_TEASER_FROM_TEASER_LISTS, teaserListId, articleId };
 }

@@ -38,6 +38,9 @@ export default class HomeController {
             store.dispatch(addTeaserToTeaserList(321, 123));
             store.dispatch(addTeaserToTeaserList(321, 1234));
 
+            store.dispatch(addTeaserToTeaserList(213, 1234));
+            store.dispatch(addTeaserToTeaserList(213, 123));
+
             const html = Mustache.render(this.templates['home'], {debug: this.debug}, {
                 reactHtml: ReactDOMServer.renderToString(
                     homePage(store, store.getState().teaserLists)

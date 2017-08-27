@@ -1,4 +1,4 @@
-import { ADD_TEASER_TO_TEASER_LIST, REMOVE_TEASER_FROM_TEASER_LIST } from "./teaserListActions";
+import { ADD_TEASER_TO_TEASER_LIST, REMOVE_TEASER_FROM_TEASER_LISTS } from "./teaserListActions";
 import { bindActionCreators } from 'redux'; 
 import { connect } from 'react-redux';
 import * as TeaserListActions from './teaserListActions';
@@ -17,12 +17,15 @@ export function teaserListReducer(state = initialState, action) {
             newState[action.teaserListId].teaserListId = action.teaserListId;
             newState[action.teaserListId].articleIds.push(action.articleId);
             return newState;
-        case REMOVE_TEASER_FROM_TEASER_LIST:
-            console.info('Reducer', REMOVE_TEASER_FROM_TEASER_LIST, action.articleId);
-            newState[action.teaserListId].articleIds.splice(newState[action.teaserListId].articleIds.indexOf(action.articleId), 1);
-            if(newState[action.teaserListId].articleIds.length === 0) {
-                delete newState[action.teaserListId].articleIds;
-            }
+        case REMOVE_TEASER_FROM_TEASER_LISTS:
+            console.info('Reducer', REMOVE_TEASER_FROM_TEASER_LISTS, action.articleId, state);
+            Object.keys(newState).map(function(key, index) {
+                const teaserList = newState[key];
+                teaserList.articleIds.splice(teaserList.articleIds.indexOf(action.articleId), 1);
+                if(teaserList.articleIds.length === 0) {
+                    delete teaserList.articleIds;
+                }
+            });
             return newState;
         default:
             return newState;
