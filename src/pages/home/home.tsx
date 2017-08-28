@@ -2,6 +2,12 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import TeaserList from "../../compositions/teaserList/teaserListReducer";
 
+/**
+ * Returns the homepage JSX.
+ * 
+ * @param store Redux store passed to the Provider.
+ * @param teaserLists teaser lists to be rendered.
+ */
 export default function homePage(store, teaserLists) {
     return <Provider store={store}>
         <div>

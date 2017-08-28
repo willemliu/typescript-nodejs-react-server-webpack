@@ -10,13 +10,22 @@ export function teaserReducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch(action.type) {
         case ADD_TEASER:
+            /**
+             * Add teaser to the store.
+             */
             newState[action.articleId] = action;
             return newState;
         case REMOVE_TEASER:
+            /**
+             * Remove teaser from the store.
+             */
             console.info('Reducer', REMOVE_TEASER, action.articleId);
             delete newState[action.articleId];
             return newState;
         default:
+            /**
+             * Could also just return state instead of newState. Oh well...
+             */
             return newState;
     }
 }

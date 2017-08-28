@@ -15,6 +15,7 @@ delete window.__PRELOADED_STATE__;
 // Create Redux store with initial state
 const store = createStore(rootReducer, preloadedState);
 
+// Render react components.
 ReactDOM.render(
     homePage(store, store.getState().teaserLists),
     document.getElementById('root')

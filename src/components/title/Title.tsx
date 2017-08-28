@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+/**
+ * Atomic react component
+ */
 export default class Title extends React.Component {
     public state: any;
     public props: any;

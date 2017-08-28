@@ -3,6 +3,9 @@ import Button from "../../components/button/Button";
 import Title from "../../components/title/Title";
 import Leadtext from "../../components/leadtext/Leadtext";
 
+/**
+ * Teaser react component.
+ */
 export default class Teaser extends React.Component {
     public state: any;
     public props: any;
@@ -33,6 +36,9 @@ export default class Teaser extends React.Component {
     }
 
     render() {
+        /**
+         * Don't render the teaser if the teaser doesn't exist.
+         */
         if(!this.props.teaser) {
             console.info('Render empty teaser', this.props.idx, this.props);
             return null;

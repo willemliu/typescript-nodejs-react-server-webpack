@@ -10,6 +10,9 @@ export function teaserListReducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch(action.type) {
         case ADD_TEASER_TO_TEASER_LIST:
+            /**
+             * Add teaser to teaser list identified by the given teaser list id.
+             */
             if(!newState[action.teaserListId]) {
                 newState[action.teaserListId] = {};
                 newState[action.teaserListId].articleIds = [];
@@ -18,6 +21,9 @@ export function teaserListReducer(state = initialState, action) {
             newState[action.teaserListId].articleIds.push(action.articleId);
             return newState;
         case REMOVE_TEASER_FROM_TEASER_LISTS:
+            /**
+             * Remove the given article id from all the teaser lists.
+             */
             console.info('Reducer', REMOVE_TEASER_FROM_TEASER_LISTS, action.articleId, state);
             Object.keys(newState).map(function(key, index) {
                 const teaserList = newState[key];
@@ -28,6 +34,9 @@ export function teaserListReducer(state = initialState, action) {
             });
             return newState;
         default:
+            /**
+             * Could also just return state instead of newState because nothing has changed. Oh well...
+             */
             return newState;
     }
 }

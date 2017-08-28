@@ -2,6 +2,9 @@ import * as React from 'react';
 
 declare var alert: any;
 
+/**
+ * Atomic react component
+ */
 export default class Button extends React.Component{
     public state;
     public props;
