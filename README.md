@@ -7,8 +7,8 @@ Most React-Redux examples one can find on the web are mostly very simple example
 # Installation, build and run
 1. Run `npm install`
 1. Run `gulp watch`
-  1. or run `gulp watch-release` if you want to build a release version using production ReactJS.
-  1. or if you only want to run the build once you can run `gulp build` or `gulp release`.
+    1. or run `gulp watch-release` if you want to build a release version using production ReactJS.
+    1. or if you only want to run the build once you can run `gulp build` or `gulp release`.
 1. Run `npm run dev` to start the webserver.
-  1. For Windows run `npm run devw`
+    1. For Windows run `npm run devw`
   
