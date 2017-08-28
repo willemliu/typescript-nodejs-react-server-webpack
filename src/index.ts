@@ -1,5 +1,5 @@
 /**
- * NodeJS application start
+ * Entry point for the NodeJS application
  */
 import * as express from 'express';
 import HomeController from "./pages/home/HomeController";
