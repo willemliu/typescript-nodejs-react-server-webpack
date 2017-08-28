@@ -8,10 +8,10 @@ import TeaserList from "../../compositions/teaserList/teaserListReducer";
  * @param store Redux store passed to the Provider.
  * @param teaserLists teaser lists to be rendered.
  */
-export default function homePage(store, teaserLists) {
+export default function aboutPage(store, teaserLists) {
     return <Provider store={store}>
         <div>
-            <h1>home</h1>
+            <h1>about</h1>
             {
                 Object.keys(teaserLists).map(function(key, index) {
                     return <TeaserList key={index} idx={index} teaserListId={teaserLists[key].teaserListId} articleIds={teaserLists[key].articleIds}/>;

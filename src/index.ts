@@ -3,6 +3,7 @@
  */
 import * as express from 'express';
 import HomeController from "./pages/home/HomeController";
+import AboutController from "./pages/about/AboutController";
 
 declare var process: any;
 
@@ -34,4 +35,6 @@ app.listen(port, () => {
 	app.use('/js', express.static('./dist/js'));
 	// Instantiate our HomeController which handles our homepage routes.
     new HomeController(app, debug);
+	// Instantiate our AboutController which handles our about page routes.
+    new AboutController(app, debug);
 });

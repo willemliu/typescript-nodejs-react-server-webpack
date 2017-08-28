@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Home: React test</title>
+        <title>About: React test</title>
     </head>
     <body>
         <div id="root">{{>reactHtml}}</div>

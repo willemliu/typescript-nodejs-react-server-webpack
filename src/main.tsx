@@ -4,6 +4,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from "./redux/reducers";
 import homePage from "./pages/home/home";
+import aboutPage from "./pages/about/about";
+import { getPageFromStore } from "./utils/reduxUtils";
 
 declare var window: any;
 
@@ -15,8 +17,10 @@ delete window.__PRELOADED_STATE__;
 // Create Redux store with initial state
 const store = createStore(rootReducer, preloadedState);
 
+let page = getPageFromStore(store);
+
 // Render react components.
 ReactDOM.render(
-    homePage(store, store.getState().teaserLists),
+    page,
     document.getElementById('root')
 );
