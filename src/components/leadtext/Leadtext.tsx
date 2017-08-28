@@ -16,7 +16,7 @@ export default class Leadtext extends React.Component {
     componentDidMount() {
         console.info('Leadtext mounted');
     }
-        
+
     componentWillUnmount() {
         console.info('Leadtext will unmount');
     }

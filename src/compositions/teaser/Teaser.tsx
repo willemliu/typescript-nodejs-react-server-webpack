@@ -2,6 +2,7 @@ import * as React from 'react';
 import Button from "../../components/button/Button";
 import Title from "../../components/title/Title";
 import Leadtext from "../../components/leadtext/Leadtext";
+import Picture from "../../components/picture/Picture";
 
 /**
  * Teaser react component.
@@ -46,6 +47,7 @@ export default class Teaser extends React.Component {
         console.info('Render teaser', this.props.idx, this.props);
         return (
             <article data-idx={this.props.idx} data-articleId={this.props.articleId}>
+                <Picture/>
                 <Title title={this.props.teaser.title}/>
                 <Leadtext leadtext={this.props.teaser.leadtext}/>
                 <Button onClick={this.removeTeaser}/>
