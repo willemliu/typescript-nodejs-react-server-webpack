@@ -5,18 +5,6 @@
     <body>
         <div id="root">{{>reactHtml}}</div>
         
-        <!-- DEV Dependencies -->
-        {{#debug}}
-        <script crossorigin src="https://unpkg.com/react@15/dist/react.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-        {{/debug}}
-
-        {{^debug}}
-        <!-- PROD Dependencies -->
-        <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-        {{/debug}}
-
         <!-- Main -->
         <script>
             window.__PRELOADED_STATE__ = {{>preloadedState}};

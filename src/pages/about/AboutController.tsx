@@ -27,7 +27,7 @@ export default class AboutController {
     /**
      * Constructor.
      * @param app Express app instance.
-     * @param debug when debug is true we use this flag in our Mustache template to determine which React JS files to load.
+     * @param debug
      */
     constructor(app: express.Application, debug?: boolean) {
         console.info('Initialized About page');
@@ -74,7 +74,7 @@ export default class AboutController {
             reactHtml: ReactDOMServer.renderToString(
                 getPageFromStore(store)
             ),
-            preloadedState: JSON.stringify(store.getState(), null, 2)
+            preloadedState: (this.debug)?JSON.stringify(store.getState(), null, 2):JSON.stringify(store.getState())
         });
         res.send(html);
     }

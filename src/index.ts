@@ -12,8 +12,8 @@ console.debug = console.info;
 
 // Disable console logging when not in development.
 let debug = true;
-if(process.env.NODE_ENV && process.env.NODE_ENV.trim().toUpperCase() == 'DEVELOPMENT') {
-	console.info(new Date(), 'Running in', process.env.NODE_ENV.trim());
+if(process.env.NODE_ENV == 'development') {
+	console.info(new Date(), 'Running in', process.env.NODE_ENV);
 } else {
 	debug = false;
 	console.info(new Date(), 'Running in Production');
