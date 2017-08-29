@@ -15,12 +15,22 @@ import { rootReducer } from "../redux/reducers";
  * One could argue for having a single store for a multi-page app which results in faster
  * page-rendering because we can assume the store does not contain stale data and we don't
  * need to retrieve dynamic data upon page load.
+ * 
  * To have this work properly however we need to have a process which keeps the Redux store
  * up-to-date and also purge data from the store which is no longer needed to free up some
  * memory. Freeing up memory is crucial as a webserver could live for a very long time and
  * the store would otherwise keep accumulating data.
+ * 
  * If speed is of utmost importance then implementing the necessary management code might
  * outweigh the benefit of a more compact and easier to maintain application.
+ * However do note that you may also have to think about what to do with session specific
+ * information. Think of a user who is logged in and should see a different version of the
+ * website because of elevated rights (I.e.: more menu items).
+ * 
+ * In our example we will not use the global store. Instead we create a new Redux store per 
+ * request. This keeps our application code-base simple although less performant.
+ * 
+ * So the store below is _not_ used throughout the example.
  */
 const store: any = createStore(rootReducer);
         
