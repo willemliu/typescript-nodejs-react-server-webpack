@@ -15,11 +15,14 @@ declare var __dirname: any;
 
 /**
  * Handles our homepage routes.
+ * 
+ * Is responsible for populating the initial Redux store to render the page.
  */
 export default class AboutController {
     private app: express.Application;
     private templates = {};
     private debug: boolean;
+    private page: string = 'about';
 
     /**
      * Constructor.
@@ -27,13 +30,13 @@ export default class AboutController {
      * @param debug when debug is true we use this flag in our Mustache template to determine which React JS files to load.
      */
     constructor(app: express.Application, debug?: boolean) {
-        console.info('Initialized Home page');
+        console.info('Initialized About page');
         if(debug !== undefined) {
             this.debug = debug;
         }
         this.app = app;
         // We load the homepage Mustache template and when done we initialize the routes.
-        loadTemplates({about: `${__dirname}/about.mst`}).then((templates) => {
+        loadTemplates({about: `${__dirname}/${this.page}.mst`}).then((templates) => {
             console.info('Templates load done', templates);
             this.templates = templates;
             this.initRoutes();
@@ -44,7 +47,7 @@ export default class AboutController {
      * Setup all routes for our homepage.
      */
     initRoutes() {
-        this.app.get('/about', this.getAboutPage.bind(this));
+        this.app.get(`/${this.page}`, this.getAboutPage.bind(this));
     }
 
     getAboutPage(req, res) {
@@ -52,7 +55,7 @@ export default class AboutController {
         const store: any = createStore(rootReducer);
 
         // Set the current page so the client knows what to render.
-        store.dispatch(setPage('about'));
+        store.dispatch(setPage(this.page));
 
         // Create some teasers.
         store.dispatch(addTeaser({articleId: 123, title: 'Willem Liu', leadtext: 'This is something'}));
@@ -67,7 +70,7 @@ export default class AboutController {
 
         // Render our homepage. Pass preloadedState as partial which is set as JS object in the page to be
         // picked up by the client side Redux as initial state.
-        const html = Mustache.render(this.templates['about'], {debug: this.debug}, {
+        const html = Mustache.render(this.templates[this.page], {debug: this.debug}, {
             reactHtml: ReactDOMServer.renderToString(
                 getPageFromStore(store)
             ),

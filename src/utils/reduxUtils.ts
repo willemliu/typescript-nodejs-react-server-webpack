@@ -9,7 +9,7 @@ import { rootReducer } from "../redux/reducers";
 
 /**
  * Create a global Redux store instance. This store is the same for every visitor and
- * can contain data for pages which a user never visited. It is useful for a SPA
+ * can contain data for pages which a user never visited before. It is useful for a SPA
  * (Single Page app). Maybe less so for a multi-page app.
  * 
  * One could argue for having a single store for a multi-page app which results in faster
@@ -30,12 +30,14 @@ import { rootReducer } from "../redux/reducers";
  * In our example we will not use the global store. Instead we create a new Redux store per 
  * request. This keeps our application code-base simple although less performant.
  * 
- * So the store below is _not_ used throughout the example.
+ * So the store below is _not_ used throughout the example project.
  */
 const store: any = createStore(rootReducer);
         
 /**
  * Return the global Redux store.
+ * 
+ * Never used in this example project.
  */
 export function getStore(): Store<any> {
     return store;

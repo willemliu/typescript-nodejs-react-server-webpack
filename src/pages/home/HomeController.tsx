@@ -16,11 +16,14 @@ declare var __dirname: any;
 
 /**
  * Handles our homepage routes.
+ * 
+ * Is responsible for populating the initial Redux store to render the page.
  */
 export default class HomeController {
     private app: express.Application;
     private templates = {};
     private debug: boolean;
+    private page: string = 'home';
 
     /**
      * Constructor.
@@ -34,7 +37,7 @@ export default class HomeController {
         }
         this.app = app;
         // We load the homepage Mustache template and when done we initialize the routes.
-        loadTemplates({home: `${__dirname}/home.mst`}).then((templates) => {
+        loadTemplates({home: `${__dirname}/${this.page}.mst`}).then((templates) => {
             console.info('Templates load done', templates);
             this.templates = templates;
             this.initRoutes();
@@ -46,7 +49,7 @@ export default class HomeController {
      */
     initRoutes() {
         this.app.get('/', this.getHomePage.bind(this));
-        this.app.get('/home', this.getHomePage.bind(this));
+        this.app.get(`/${this.page}`, this.getHomePage.bind(this));
     }
 
     private getHomePage(req, res) {
@@ -54,7 +57,7 @@ export default class HomeController {
         const store: any = createStore(rootReducer);
 
         // Set the current page so the client knows what to render.
-        store.dispatch(setPage('home'));
+        store.dispatch(setPage(this.page));
         
         // Create some teasers.
         store.dispatch(addTeaser({articleId: 123, title: 'Willem Liu', leadtext: 'This is something'}));
@@ -69,7 +72,7 @@ export default class HomeController {
 
         // Render our homepage. Pass preloadedState as partial which is set as JS object in the page to be
         // picked up by the client side Redux as initial state.
-        const html = Mustache.render(this.templates['home'], {debug: this.debug}, {
+        const html = Mustache.render(this.templates[this.page], {debug: this.debug}, {
             reactHtml: ReactDOMServer.renderToString(
                 getPageFromStore(store)
             ),
