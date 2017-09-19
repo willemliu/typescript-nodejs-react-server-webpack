@@ -1,16 +1,15 @@
 import * as express from 'express';
-import * as fs from 'fs-extra';
 import * as Mustache from 'mustache';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import homePage from "./home";
 import { createStore } from 'redux';
-import { rootReducer } from "../../redux/reducers";
-import { addTeaser } from "../../compositions/teaser/teaserActions";
-import { addTeaserToTeaserList } from "../../compositions/teaserList/teaserListActions";
-import { loadTemplates } from "../../utils/mustacheUtils";
-import { setPage } from "../../redux/actions";
-import { getPageFromStore } from "../../utils/reduxUtils";
+
+import { setTeaser } from '../../compositions/teaser/teaserActions';
+import { setTeasersForTeaserList } from '../../compositions/teaserList/teaserListActions';
+import { setPage } from '../../redux/actions';
+import { rootReducer } from '../../redux/rootReducer';
+import { loadTemplates } from '../../utils/mustacheUtils';
+import { getPageFromStore } from '../../utils/reduxUtils';
 
 declare var __dirname: any;
 
@@ -47,7 +46,7 @@ export default class HomeController {
     /**
      * Setup all routes for our homepage.
      */
-    initRoutes() {
+    private initRoutes() {
         this.app.get('/', this.getHomePage.bind(this));
         this.app.get(`/${this.page}`, this.getHomePage.bind(this));
     }
@@ -59,22 +58,26 @@ export default class HomeController {
         // Set the current page so the client knows what to render.
         store.dispatch(setPage(this.page));
         
-        // Create some teasers.
-        store.dispatch(addTeaser({articleId: 123, title: 'Willem Liu', leadtext: 'This is something'}));
-        store.dispatch(addTeaser({articleId: 1234, title: 'Stephanie Wong', leadtext: 'This is something else'}));
-
         // Create some article lists.
-        store.dispatch(addTeaserToTeaserList(321, 123));
-        store.dispatch(addTeaserToTeaserList(321, 1234));
-
-        store.dispatch(addTeaserToTeaserList(213, 1234));
-        store.dispatch(addTeaserToTeaserList(213, 123));
+        store.dispatch(setTeasersForTeaserList('321', [123, 1234]));
+        store.dispatch(setTeasersForTeaserList('213', [1234, 123]));
+        store.dispatch(setTeasersForTeaserList('1234', [1234, 123]));
+        store.dispatch(setTeasersForTeaserList('12345', [1234, 123]));
+        store.dispatch(setTeasersForTeaserList('12346', [1234, 123]));
+        store.dispatch(setTeasersForTeaserList('12347', [1234, 123]));
+        store.dispatch(setTeasersForTeaserList('12348', [1234, 123]));
+        store.dispatch(setTeasersForTeaserList('12349', [1234, 123]));
+        store.dispatch(setTeasersForTeaserList('12340', [1234, 123]));
+        
+        // Create some teasers.
+        store.dispatch(setTeaser({id: 123, teaserTitle: 'Willem Liu', teaserIntro: 'This is something'}));
+        store.dispatch(setTeaser({id: 1234, teaserTitle: 'Stephanie Wong', teaserIntro: 'This is something else'}));
 
         // Render our homepage. Pass preloadedState as partial which is set as JS object in the page to be
         // picked up by the client side Redux as initial state.
         const html = Mustache.render(this.templates[this.page], {debug: this.debug}, {
             reactHtml: ReactDOMServer.renderToString(
-                getPageFromStore(store)
+                getPageFromStore(store, true)
             ),
             preloadedState: (this.debug)?JSON.stringify(store.getState(), null, 2):JSON.stringify(store.getState())
         });

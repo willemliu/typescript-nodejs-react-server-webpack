@@ -2,13 +2,20 @@
  * Entry point for the NodeJS application
  */
 import * as express from 'express';
-import HomeController from "./pages/home/HomeController";
-import AboutController from "./pages/about/AboutController";
+import * as winston from 'winston';
+
+import { AppConfig } from './conf/config';
+import AboutController from './pages/about/AboutController';
+import HomeController from './pages/home/HomeController';
 
 declare var process: any;
 
-// Simply allow console.debug to be used. It is set to be equivalent to console.info.
-console.debug = console.info;
+winston.level = 'warn';
+console.log = (function(txt:any){winston.log('log', txt)});
+console.info = (function(txt:any){winston.info(txt)});
+console.debug = (function(txt:any){winston.debug(txt)});
+console.warn = (function(txt:any){winston.warn(txt)});
+console.error = (function(txt:any){winston.error(txt)});
 
 // Disable console logging when not in development.
 let debug = true;
@@ -23,16 +30,16 @@ if(process.env.NODE_ENV == 'development') {
 
 // Create Express instance.
 const app: express.Application = express();
-// We use this port number to expose our webserver.
-const port: number = 3333;
 
 /**
  * Start our Express webserver on the port defined above.
  */
-app.listen(port, () => {
-	console.info(`Example app listening on port ${port}`);
+app.listen(AppConfig.port, () => {
+	console.info(`Example app listening on port ${AppConfig.port}`);
 	// Expose our static files.
-	app.use('/js', express.static('./dist/js'));
+	for(let staticFile of AppConfig.staticFiles) {
+		app.use(staticFile.route, express.static(staticFile.path));		
+	}
 	// Instantiate our HomeController which handles our homepage routes.
     new HomeController(app, debug);
 	// Instantiate our AboutController which handles our about page routes.

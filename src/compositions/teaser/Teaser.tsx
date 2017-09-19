@@ -1,8 +1,9 @@
 import * as React from 'react';
-import Button from "../../components/button/Button";
-import Title from "../../components/title/Title";
-import Leadtext from "../../components/leadtext/Leadtext";
-import Picture from "../../components/picture/Picture";
+
+import Button from '../../components/button/Button';
+import Leadtext from '../../components/leadtext/Leadtext';
+import Picture from '../../components/picture/Picture';
+import Title from '../../components/title/Title';
 
 /**
  * Teaser react component.

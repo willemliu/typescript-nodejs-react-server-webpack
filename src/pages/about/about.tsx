@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import TeaserList from "../../compositions/teaserList/teaserListReducer";
+
+import TeaserList from '../../compositions/teaserList/teaserListReducer';
+import { ListsServiceConfig } from '../../conf/config';
 
 /**
  * Returns the page JSX.
@@ -13,8 +15,8 @@ export default function aboutPage(store, teaserLists) {
         <div>
             <h1>about</h1>
             {
-                Object.keys(teaserLists).map(function(key, index) {
-                    return <TeaserList key={index} idx={index} teaserListId={teaserLists[key].teaserListId} articleIds={teaserLists[key].articleIds}/>;
+                ListsServiceConfig.lists.map(function(list, index) {
+                    return <TeaserList key={list.name} idx={index} teaserListName={list.name} articleIds={teaserLists[list.name].articleIds}/>;
                 })
             }
         </div>

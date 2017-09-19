@@ -4,11 +4,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { rootReducer } from "./redux/reducers";
-import homePage from "./pages/home/home";
-import aboutPage from "./pages/about/about";
-import { getPageFromStore } from "./utils/reduxUtils";
+
+import { rootReducer } from './redux/rootReducer';
+import { getPageFromStore } from './utils/reduxUtils';
 
 declare var window: any;
 

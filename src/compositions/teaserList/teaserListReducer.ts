@@ -1,8 +1,13 @@
-import { ADD_TEASER_TO_TEASER_LIST, REMOVE_TEASER_FROM_TEASER_LISTS } from "./teaserListActions";
-import { bindActionCreators } from 'redux'; 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import TeaserList from './TeaserList';
+import {
+    ADD_TEASER_TO_TEASER_LIST,
+    REMOVE_TEASER_FROM_TEASER_LISTS,
+    SET_TEASERS_FOR_TEASER_LIST,
+} from './teaserListActions';
 import * as TeaserListActions from './teaserListActions';
-import TeaserList from "./TeaserList";
 
 const initialState: any = {};
 
@@ -13,12 +18,23 @@ export function teaserListReducer(state = initialState, action) {
             /**
              * Add teaser to teaser list identified by the given teaser list id.
              */
-            if(!newState[action.teaserListId]) {
-                newState[action.teaserListId] = {};
-                newState[action.teaserListId].articleIds = [];
+            if(!newState[action.teaserListName]) {
+                newState[action.teaserListName] = {};
+                newState[action.teaserListName].articleIds = [];
             }
-            newState[action.teaserListId].teaserListId = action.teaserListId;
-            newState[action.teaserListId].articleIds.push(action.articleId);
+            newState[action.teaserListName].teaserListName = action.teaserListName;
+            newState[action.teaserListName].articleIds.push(action.articleId);
+            return newState;
+        case SET_TEASERS_FOR_TEASER_LIST:
+            /**
+             * Set teasers for teaser list identified by the given teaser list id.
+             */
+            if(!newState[action.teaserListName]) {
+                newState[action.teaserListName] = {};
+                newState[action.teaserListName].articleIds = [];
+            }
+            newState[action.teaserListName].teaserListName = action.teaserListName;
+            newState[action.teaserListName].articleIds = action.articleIds;
             return newState;
         case REMOVE_TEASER_FROM_TEASER_LISTS:
             /**
@@ -44,8 +60,8 @@ export function teaserListReducer(state = initialState, action) {
 
 function mapStateToProps(state, ownProps) {
     return {
-        teaserListId: state.teaserLists[ownProps.teaserListId].teaserListId,
-        articleIds: state.teaserLists[ownProps.teaserListId].articleIds
+        teaserListName: state.teaserLists[ownProps.teaserListName].teaserListName,
+        articleIds: state.teaserLists[ownProps.teaserListName].articleIds
     };
 }
   

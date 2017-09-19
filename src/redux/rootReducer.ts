@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import clockReducer from "../components/clock/clockReducer";
-import { teaserReducer } from "../compositions/teaser/teaserReducer";
-import { teaserListReducer } from "../compositions/teaserList/teaserListReducer";
-import { SET_PAGE } from "./actions";
+
+import clockReducer from '../components/clock/clockReducer';
+import { teaserReducer } from '../compositions/teaser/teaserReducer';
+import { teaserListReducer } from '../compositions/teaserList/teaserListReducer';
+import { SET_PAGE } from './actions';
 
 /**
  * Combine individual reducers to one root reducer to be used by Redux.

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { bindActionCreators } from 'redux'; 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import * as ClockActions from './clockActions';
 
 class Clock extends React.Component {

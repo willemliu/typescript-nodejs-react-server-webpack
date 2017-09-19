@@ -1,11 +1,11 @@
 /**
  * Collection of Redux helper functions.
  */
+import { createStore, Store } from 'redux';
 
-import aboutPage from "../pages/about/about";
-import homePage from "../pages/home/home";
-import { Store, createStore } from "redux";
-import { rootReducer } from "../redux/reducers";
+import aboutPage from '../pages/about/about';
+import homePage from '../pages/home/home';
+import { rootReducer } from '../redux/rootReducer';
 
 /**
  * Create a global Redux store instance. This store is the same for every visitor and
@@ -47,15 +47,16 @@ export function getStore(): Store<any> {
  * Return the JSX of the current page.
  * 
  * @param store The Redux store to be used for rendering the page.
+ * @param aboveTheFold Default: false. Only render what is considered above-the-fold.
  */
-export function getPageFromStore(store: Store<any>) {
+export function getPageFromStore(store: Store<any>, aboveTheFold = false) {
     let jsx;
     switch(store.getState().page) {
         case 'about':
             jsx = aboutPage(store, store.getState().teaserLists);
             break;
         default:
-            jsx = homePage(store, store.getState().teaserLists);
+            jsx = homePage(store, store.getState().teaserLists, aboveTheFold);
     }
     return jsx;    
 }

@@ -2,7 +2,7 @@
  * action types
  */
 
-export const ADD_TEASER = 'ADD_TEASER';
+export const SET_TEASER = 'SET_TEASER';
 export const REMOVE_TEASER = 'REMOVE_TEASER';
 
 /*
@@ -13,8 +13,8 @@ export const REMOVE_TEASER = 'REMOVE_TEASER';
  * action creators
  */
 
-export function addTeaser(teaser: {articleId: number, title: string, leadtext: string}) {
-  return { type: ADD_TEASER, articleId: teaser.articleId, title: teaser.title, leadtext: teaser.leadtext };
+export function setTeaser(teaser: {id: number, teaserTitle: string, teaserIntro: string}) {
+  return { type: SET_TEASER, articleId: teaser.id, title: teaser.teaserTitle, leadtext: teaser.teaserIntro };
 }
 
 export function removeTeaser(articleId) {

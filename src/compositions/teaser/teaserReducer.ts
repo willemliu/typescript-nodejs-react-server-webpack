@@ -1,19 +1,20 @@
-import { ADD_TEASER, REMOVE_TEASER } from "./teaserActions";
-import { bindActionCreators } from 'redux'; 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import Teaser from './Teaser';
+import { REMOVE_TEASER, SET_TEASER } from './teaserActions';
 import * as TeaserActions from './teaserActions';
-import Teaser from "./Teaser";
 
 const initialState: any = {};
 
 export function teaserReducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch(action.type) {
-        case ADD_TEASER:
+        case SET_TEASER:
             /**
-             * Add teaser to the store.
+             * Set teaser in the store.
              */
-            newState[action.articleId] = action;
+            newState[action.articleId] = { articleId: action.articleId, title: action.title, leadtext: action.leadtext };
             return newState;
         case REMOVE_TEASER:
             /**
@@ -32,6 +33,7 @@ export function teaserReducer(state = initialState, action) {
 
 
 function mapStateToProps(state, ownProps) {
+    console.info(ownProps);
     return {
         teaser: state.teasers[ownProps.articleId]
     };
